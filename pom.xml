@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>hulio13</groupId>
-    <artifactId>articles-site</artifactId>
+    <artifactId>articles-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>articles-site</name>
-    <description>articles-site</description>
+    <name>articles-api</name>
+    <description>articles-api</description>
     <properties>
         <java.version>17</java.version>
     </properties>

@@ -1,13 +1,13 @@
-package hulio13.articlesSite;
+package hulio13.articlesApi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ArticlesSiteApplication {
+public class ArticlesApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ArticlesSiteApplication.class, args);
+        SpringApplication.run(ArticlesApiApplication.class, args);
     }
 
 }
