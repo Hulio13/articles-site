@@ -1,5 +1,6 @@
 package hulio13.articlesApi.domain.entity;
 
+import hulio13.articlesApi.domain.entity.author.AuthorName;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,15 +20,15 @@ public class Author {
     @Setter
     @Getter
     @NonNull
-    @Column(name = "name")
-    private String name;
+    @Embedded
+    private AuthorName name;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Article> articles = new ArrayList<>();
 
     public Author(long id, @NonNull String name) {
         this.id = id;
-        this.name = name;
+        this.name = new AuthorName(name);
     }
 
     public Author(long id, @NonNull String name, List<Article> articles){

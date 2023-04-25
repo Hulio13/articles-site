@@ -1,9 +1,12 @@
 package hulio13.articlesApi.domain.entity;
 
-import hulio13.articlesApi.exception.IncorrectStringLengthException;
+import hulio13.articlesApi.domain.entity.article.ArticleTitle;
+import hulio13.articlesApi.domain.utils.UrlValidator;
+import hulio13.articlesApi.exception.IllegalStringLengthException;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,24 +20,22 @@ public class Article {
     @Getter
     private long id;
 
-    @NonNull
-    @Getter
-    @Column(name = "title")
-    private String title;
+    @NonNull @Getter @Setter @Embedded
+    private ArticleTitle title;
 
-    @Column(name = "coverImgUrl")
+    @Column(name = "cover_image_url")
     @Getter
     private String coverImgUrl;
 
-    @Column(name = "creationTime")
+    @Column(name = "creation_time")
     private LocalDateTime creationTime;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Author> authors = new ArrayList<Author>();
+    private List<Author> authors = new ArrayList<>();
 
     public Article(long id, @NonNull String title) {
         this.id = id;
-        this.title = title;
+        this.title = new ArticleTitle(title);
         this.creationTime = LocalDateTime.now();
     }
     public Article(long id, @NonNull String title, List<Author> authors){
@@ -52,11 +53,10 @@ public class Article {
         this.authors = authors;
     }
 
-    public void setTitle(String title) {
-        if (title.length() > 150){
-            throw new IncorrectStringLengthException(
-                    "String should have length less or equal 150");
-        }
-        this.title = title;
+    public void setCoverImgUrl(String coverImgUrl) {
+        if (!UrlValidator.IsUrlValid(coverImgUrl))
+            throw new IllegalArgumentException("Value is not an url");
+
+        this.coverImgUrl = coverImgUrl;
     }
 }
