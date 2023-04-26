@@ -2,11 +2,9 @@ package hulio13.articlesApi.domain.entity;
 
 import hulio13.articlesApi.domain.entity.article.ArticleTitle;
 import hulio13.articlesApi.domain.utils.UrlValidator;
-import hulio13.articlesApi.exception.IllegalStringLengthException;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +26,7 @@ public class Article {
     private String coverImgUrl;
 
     @Column(name = "creation_time")
+    @Getter
     private LocalDateTime creationTime;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -58,5 +57,13 @@ public class Article {
             throw new IllegalArgumentException("Value is not an url");
 
         this.coverImgUrl = coverImgUrl;
+    }
+
+    public void addAuthor(Author author){
+        authors.add(author);
+    }
+
+    public boolean removeAuthorById(long id){
+        return authors.removeIf(a -> a.getId() == id);
     }
 }
