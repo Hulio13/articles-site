@@ -35,4 +35,12 @@ public class Author {
         this(id, name);
         this.articles = articles;
     }
+
+    public void addArticle(Article article){
+        articles.add(article);
+    }
+
+    public boolean removeArticleById(long id){
+        return articles.removeIf(a -> a.getId() == id);
+    }
 }
