@@ -13,7 +13,7 @@ public class UrlValidator {
     );
 
     public static boolean IsUrlValid(String value) {
-        return !startsWithHttp.matcher(value).find() &&
-                !notStartsWithHttp.matcher(value).find();
+        return startsWithHttp.matcher(value).find() ||
+                notStartsWithHttp.matcher(value).find();
     }
 }
