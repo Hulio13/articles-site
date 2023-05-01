@@ -7,6 +7,7 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "authors")
@@ -42,5 +43,13 @@ public class Author {
 
     public boolean removeArticleById(long id){
         return articles.removeIf(a -> a.getId() == id);
+    }
+
+    public Optional<Article> getArticleById(long id){
+        return articles.stream().filter(a -> a.getId() == id).findFirst();
+    }
+
+    public List<Article> getAllArticles(){
+        return articles;
     }
 }
