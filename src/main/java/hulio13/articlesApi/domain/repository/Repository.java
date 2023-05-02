@@ -15,4 +15,6 @@ public interface Repository<T> {
     void remove(T entity);
 
     void removeById(long id);
+
+    T save(T entity);
 }
