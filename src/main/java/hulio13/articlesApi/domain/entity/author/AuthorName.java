@@ -1,6 +1,6 @@
 package hulio13.articlesApi.domain.entity.author;
 
-import hulio13.articlesApi.exception.IllegalStringLengthException;
+import hulio13.articlesApi.domain.exception.IllegalStringLengthException;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
