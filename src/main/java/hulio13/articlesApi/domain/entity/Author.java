@@ -1,6 +1,7 @@
 package hulio13.articlesApi.domain.entity;
 
 import hulio13.articlesApi.domain.entity.author.AuthorName;
+import hulio13.articlesApi.domain.exception.AddException;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,6 +39,10 @@ public class Author {
     }
 
     public void addArticle(Article article){
+        if (articles.stream().anyMatch(a -> a.getId() == article.getId()))
+            throw new AddException("Article with id '" + article.getId() +
+                    "' already exist.");
+
         articles.add(article);
     }
 
