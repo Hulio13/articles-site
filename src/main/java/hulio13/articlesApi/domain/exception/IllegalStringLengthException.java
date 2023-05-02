@@ -1,4 +1,4 @@
-package hulio13.articlesApi.exception;
+package hulio13.articlesApi.domain.exception;
 
 public class IllegalStringLengthException extends RuntimeException{
     public IllegalStringLengthException() {
