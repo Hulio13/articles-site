@@ -25,7 +25,7 @@ public class Article {
     @Getter
     private String coverImgUrl;
 
-    @Column(name = "creation_time")
+    @Column(name = "creation_time", nullable = false)
     @Getter
     private LocalDateTime creationTime;
 

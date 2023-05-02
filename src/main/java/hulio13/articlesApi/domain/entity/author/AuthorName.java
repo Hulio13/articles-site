@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor(force = true, access = AccessLevel.PROTECTED)
-@AttributeOverride(name = "Value", column = @Column(name = "name"))
+@AttributeOverride(name = "Value", column = @Column(name = "name", nullable = false, unique = true))
 public class AuthorName {
     public static final int MAX_LENGTH = 50;
 
