@@ -5,6 +5,8 @@ import hulio13.articlesApi.domain.exception.AddException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AuthorTest {
@@ -58,5 +60,18 @@ class AuthorTest {
         Author author = new Author(1, "Some Name");
         author.setName(new AuthorName(AUTHOR_NAME));
         assertEquals(AUTHOR_NAME, author.getName().Value);
+    }
+
+    @Test
+    void getAllArticles(){
+        testAuthor.addArticle(new Article(1, "Some article"));
+        testAuthor.addArticle(new Article(2, "Some article2"));
+        testAuthor.addArticle(new Article(3, "Some article3"));
+
+        List<Article> articles = testAuthor.getAllArticles();
+
+        assertEquals(1, articles.get(0).getId());
+        assertEquals(3, articles.get(2).getId());
+        assertEquals(3, articles.size());
     }
 }
