@@ -29,7 +29,7 @@ public class Article {
     @Getter
     private LocalDateTime creationTime;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Author> authors = new ArrayList<>();
 
     public Article(long id, @NonNull String title) {
