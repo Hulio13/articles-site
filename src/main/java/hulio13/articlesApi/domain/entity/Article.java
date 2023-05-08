@@ -32,23 +32,18 @@ public class Article {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Author> authors = new ArrayList<>();
 
-    public Article(long id, @NonNull String title) {
+    private Article(long id, @NonNull String title){
         this.id = id;
         this.title = new ArticleTitle(title);
+    }
+
+    public Article(long id, Author author, @NonNull String title) {
+        this(id, title);
         this.creationTime = LocalDateTime.now();
+        authors.add(author);
     }
-    public Article(long id, @NonNull String title, List<Author> authors){
+    public Article(long id, @NonNull String title, @NonNull List<Author> authors){
         this(id, title);
-        this.authors = authors;
-    }
-
-    public Article(long id, @NonNull String title, String coverImgUrl){
-        this(id, title);
-        this.coverImgUrl = coverImgUrl;
-    }
-
-    public Article(long id, @NonNull String title, String coverImgUrl, List<Author> authors){
-        this(id, title, coverImgUrl);
         this.authors = authors;
     }
 
@@ -65,5 +60,9 @@ public class Article {
 
     public boolean removeAuthorById(long id){
         return authors.removeIf(a -> a.getId() == id);
+    }
+
+    public List<Author> getAuthors(){
+        return authors;
     }
 }
