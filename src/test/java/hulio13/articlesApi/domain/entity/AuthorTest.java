@@ -74,4 +74,12 @@ class AuthorTest {
         assertEquals(3, articles.get(2).getId());
         assertEquals(3, articles.size());
     }
+
+    @Test
+    void attemptToCreateAuthorWithTooLongName(){
+        String tooLongName = "N".repeat(AuthorName.MAX_LENGTH + 1);
+
+        assertThrows(Exception.class,
+                () -> new Author(1, tooLongName));
+    }
 }
