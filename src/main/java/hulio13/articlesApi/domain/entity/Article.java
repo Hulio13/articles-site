@@ -4,6 +4,8 @@ import hulio13.articlesApi.domain.entity.article.ArticleTitle;
 import hulio13.articlesApi.domain.utils.UrlValidator;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class Article {
     @Getter
     private LocalDateTime creationTime;
 
+    @Fetch(FetchMode.SUBSELECT)
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Author> authors = new ArrayList<>();
 
