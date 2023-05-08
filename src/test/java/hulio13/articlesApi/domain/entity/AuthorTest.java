@@ -21,25 +21,25 @@ class AuthorTest {
 
     @Test
     void addArticles() {
-        testAuthor.addArticle(new Article(1, "Some article"));
-        testAuthor.addArticle(new Article(2, "Some article2"));
+        testAuthor.addArticle(new Article(1, testAuthor, "Some article"));
+        testAuthor.addArticle(new Article(2, testAuthor, "Some article2"));
 
         if (testAuthor.getArticleById(1).isEmpty())
             fail("Article was not added.");
 
         assertThrows(AddException.class,
-                () -> testAuthor.addArticle(new Article(1, "Bad article")));
+                () -> testAuthor.addArticle(new Article(1, testAuthor, "Bad article")));
     }
 
     @Test
     void getId() {
-        testAuthor.addArticle(new Article(1, "Some article"));
+        testAuthor.addArticle(new Article(1, testAuthor, "Some article"));
         assertTrue(testAuthor.getArticleById(1).isPresent());
     }
 
     @Test
     void removeArticleById() {
-        testAuthor.addArticle(new Article(1, "Some article"));
+        testAuthor.addArticle(new Article(1, testAuthor, "Some article"));
 
         if (testAuthor.removeArticleById(1)){
             assertTrue(testAuthor.getArticleById(1).isEmpty());
@@ -64,9 +64,9 @@ class AuthorTest {
 
     @Test
     void getAllArticles(){
-        testAuthor.addArticle(new Article(1, "Some article"));
-        testAuthor.addArticle(new Article(2, "Some article2"));
-        testAuthor.addArticle(new Article(3, "Some article3"));
+        testAuthor.addArticle(new Article(1, testAuthor, "Some article"));
+        testAuthor.addArticle(new Article(2, testAuthor, "Some article2"));
+        testAuthor.addArticle(new Article(3, testAuthor, "Some article3"));
 
         List<Article> articles = testAuthor.getAllArticles();
 
