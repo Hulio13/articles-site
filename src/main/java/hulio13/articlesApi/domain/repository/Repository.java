@@ -1,10 +1,11 @@
 package hulio13.articlesApi.domain.repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public interface Repository<T> {
-    T getById(long id);
+    Optional<T> getById(long id);
 
     List<T> getAll();
 
