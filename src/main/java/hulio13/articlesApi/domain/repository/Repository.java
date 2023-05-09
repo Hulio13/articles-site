@@ -9,8 +9,6 @@ public interface Repository<T> {
 
     List<T> getAll();
 
-    List<T> getAllIf(Predicate<T> predicate);
-
     void add(T entity);
 
     void remove(T entity);
