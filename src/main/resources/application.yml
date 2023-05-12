@@ -1,4 +1,23 @@
+server:
+  port: 8080
+  address: localhost
+
 spring:
+  application:
+    name: articles-api
+
   datasource:
     url: jdbc:postgresql://localhost:5432/articles_api
+    username: articles_api_user
+    password: "someStrongPass"
+    driver-class-name: org.postgresql.Driver
 
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    open-in-view: false
+
+logging:
+  level:
+    root: debug
