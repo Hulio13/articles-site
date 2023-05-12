@@ -9,8 +9,6 @@ public interface Repository<T> {
 
     List<T> getAll();
 
-    void add(T entity);
-
     void remove(T entity);
 
     void removeById(long id);
