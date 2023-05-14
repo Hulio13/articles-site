@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,12 +27,12 @@ public class Author {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Article> articles = new ArrayList<>();
 
-    public Author(long id, @NonNull String name) {
+    public Author(long id, @NonNull AuthorName name) {
         this.id = id;
-        this.name = new AuthorName(name);
+        this.name = name;
     }
 
-    public Author(long id, @NonNull String name, List<Article> articles){
+    public Author(long id, @NonNull AuthorName name, List<Article> articles){
         this(id, name);
         this.articles = articles;
     }

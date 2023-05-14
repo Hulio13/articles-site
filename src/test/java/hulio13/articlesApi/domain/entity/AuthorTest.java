@@ -16,7 +16,7 @@ class AuthorTest {
 
     @BeforeEach
     void setUp(){
-        testAuthor = new Author(1, AUTHOR_NAME);
+        testAuthor = new Author(1, new AuthorName(AUTHOR_NAME));
     }
 
     @Test
@@ -51,13 +51,13 @@ class AuthorTest {
 
     @Test
     void getName() {
-        Author author = new Author(1, AUTHOR_NAME);
+        Author author = new Author(1, new AuthorName(AUTHOR_NAME));
         assertEquals(AUTHOR_NAME, author.getName().Value);
     }
 
     @Test
     void setName() {
-        Author author = new Author(1, "Some Name");
+        Author author = new Author(1, new AuthorName("Some Name"));
         author.setName(new AuthorName(AUTHOR_NAME));
         assertEquals(AUTHOR_NAME, author.getName().Value);
     }
@@ -80,6 +80,6 @@ class AuthorTest {
         String tooLongName = "N".repeat(AuthorName.MAX_LENGTH + 1);
 
         assertThrows(Exception.class,
-                () -> new Author(1, tooLongName));
+                () -> new Author(1, new AuthorName(tooLongName)));
     }
 }
