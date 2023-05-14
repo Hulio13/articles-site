@@ -7,9 +7,6 @@ import hulio13.articlesApi.domain.entity.Author;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/api/author")
 public class AuthorController {
