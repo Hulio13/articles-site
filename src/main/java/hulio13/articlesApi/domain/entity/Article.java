@@ -23,6 +23,11 @@ public class Article {
     @NonNull @Getter @Setter @Embedded
     private ArticleTitle title;
 
+    @Column(name = "is_hidden")
+    @Getter
+    @Setter
+    private boolean isHidden;
+
     @Column(name = "cover_image_url")
     @Getter
     private String coverImgUrl;
@@ -31,21 +36,25 @@ public class Article {
     @Getter
     private LocalDateTime creationTime;
 
+    @Column(name = "markdown_text")
+    @Getter
+    private String markdownText;
+
     @Fetch(FetchMode.SUBSELECT)
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Author> authors = new ArrayList<>();
 
-    private Article(long id, @NonNull String title){
+    private Article(long id, @NonNull ArticleTitle title){
         this.id = id;
-        this.title = new ArticleTitle(title);
+        this.title = title;
     }
 
-    public Article(long id, Author author, @NonNull String title) {
+    public Article(long id, Author author, @NonNull ArticleTitle title) {
         this(id, title);
         this.creationTime = LocalDateTime.now();
         authors.add(author);
     }
-    public Article(long id, @NonNull String title, @NonNull List<Author> authors){
+    public Article(long id, @NonNull ArticleTitle title, @NonNull List<Author> authors){
         this(id, title);
         this.authors = authors;
     }
