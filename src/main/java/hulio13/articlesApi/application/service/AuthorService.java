@@ -21,6 +21,11 @@ public class AuthorService {
         repository.save(author);
     }
 
+    @Transactional
+    public void update(Author author){
+        repository.save(author);
+    }
+
 
     public Optional<Author> getById(long id){
         return repository.getById(id);
