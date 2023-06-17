@@ -32,6 +32,10 @@ public class Author {
         this.name = name;
     }
 
+    public Author(@NonNull AuthorName name){
+        this.name = name;
+    }
+
     public Author(long id, @NonNull AuthorName name, List<Article> articles){
         this(id, name);
         this.articles = articles;
