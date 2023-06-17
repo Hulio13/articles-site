@@ -13,14 +13,14 @@ import org.springframework.security.provisioning.UserDetailsManager;
 
 @Transactional
 public class JPAUserDetailsManager implements UserDetailsManager {
-    private JPAUserRepository repository;
+    private JPAAppUserDetailsRepository repository;
 
     private final SecurityContextHolderStrategy securityContextHolderStrategy = SecurityContextHolder
             .getContextHolderStrategy();
 
     private final PasswordEncoder encoder;
 
-    public JPAUserDetailsManager(JPAUserRepository repository, PasswordEncoder encoder) {
+    public JPAUserDetailsManager(JPAAppUserDetailsRepository repository, PasswordEncoder encoder) {
         this.repository = repository;
         this.encoder = encoder;
     }
