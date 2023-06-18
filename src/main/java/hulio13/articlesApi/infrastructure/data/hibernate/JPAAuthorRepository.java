@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class HibernateAuthorRepository implements AuthorRepository {
+public class JPAAuthorRepository implements AuthorRepository {
     @PersistenceContext
     private EntityManager em;
 
