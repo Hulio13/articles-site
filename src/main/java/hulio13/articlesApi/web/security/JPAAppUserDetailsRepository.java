@@ -1,5 +1,7 @@
 package hulio13.articlesApi.web.security;
 
+import hulio13.articlesApi.api.exceptions.NotFoundException;
+import hulio13.articlesApi.infrastructure.data.AlreadyExistException;
 import hulio13.articlesApi.web.security.entities.AppUserDetails;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -22,15 +24,27 @@ public class JPAAppUserDetailsRepository {
     }
 
     public void remove(AppUserDetails appUserDetails) {
-        em.remove(appUserDetails);
+        Optional<AppUserDetails> foundByUsername = getByUsername(appUserDetails.getUsername());
+        if (foundByUsername.isEmpty())
+            throw new NotFoundException("UserDetails with username '" + appUserDetails.getUsername()
+                    + "' not found.");
+
+        em.remove(foundByUsername.get());
     }
 
     public void update(AppUserDetails appUserDetails) {
+        var foundByUsername = getByUsername(appUserDetails.getUsername());
+        if (foundByUsername.isEmpty())
+            throw new NotFoundException("UserDetails with username '" + appUserDetails.getUsername()
+            + "' not found.");
+
         em.merge(appUserDetails);
     }
 
     public void create(AppUserDetails appUserDetails) {
         if (getByUsername(appUserDetails.getUsername()).isEmpty())
             em.persist(appUserDetails);
+        else
+            throw new AlreadyExistException("UserDetails already exist.");
     }
 }
