@@ -32,6 +32,15 @@ public class AppUserDetails implements UserDetails {
     @Column(name = "is_locked", nullable = false)
     private boolean locked = false;
 
+    public AppUserDetails(String username, String password, Author author) {
+        this.username = username;
+        this.password = password;
+        this.author = author;
+        this.enabled = true;
+        this.expired = false;
+        this.locked = false;
+    }
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private final List<Role> roles = new ArrayList<>();
 
