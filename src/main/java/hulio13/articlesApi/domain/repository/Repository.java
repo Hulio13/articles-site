@@ -2,7 +2,6 @@ package hulio13.articlesApi.domain.repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 public interface Repository<T> {
     Optional<T> getById(long id);
@@ -13,5 +12,7 @@ public interface Repository<T> {
 
     void removeById(long id);
 
-    T save(T entity);
+    T create(T entity);
+
+    T update(T entity);
 }
