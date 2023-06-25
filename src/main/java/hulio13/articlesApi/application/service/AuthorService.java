@@ -5,7 +5,6 @@ import hulio13.articlesApi.domain.repository.AuthorRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,12 +17,12 @@ public class AuthorService {
 
     @Transactional
     public void add(Author author){
-        repository.save(author);
+        repository.create(author);
     }
 
     @Transactional
     public void update(Author author){
-        repository.save(author);
+        repository.create(author);
     }
 
 

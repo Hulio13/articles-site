@@ -51,11 +51,11 @@ public class JPAAuthorRepository implements AuthorRepository {
         if (entity == null) throw new IllegalArgumentException("Entity is null, Author expected.");
 
         if (getById(entity.getId()).isPresent())
-            throw new AlreadyExistException("Author with id '" + entity.getId()+ "' already exist.");
+            throw new AlreadyExistException("Author with id '" + entity.getId() + "' already exist.");
 
         Optional<Author> byAuthorName = getByAuthorName(entity.getName().Value);
         if (byAuthorName.isPresent())
-            throw new AlreadyExistException("Author with name '" + entity.getName()+ "' already exist.");
+            throw new AlreadyExistException("Author with name '" + entity.getName() + "' already exist.");
 
         em.persist(entity);
         return entity;
@@ -74,6 +74,6 @@ public class JPAAuthorRepository implements AuthorRepository {
     @Override
     public Optional<Author> getByAuthorName(@NotNull String name) {
         return em.createQuery("select a from Author a where a.name.Value = '" + name + "'", Author.class)
-                        .getResultStream().findFirst();
+                .getResultStream().findFirst();
     }
 }
