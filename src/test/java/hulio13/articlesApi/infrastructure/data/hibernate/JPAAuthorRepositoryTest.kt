@@ -71,6 +71,34 @@ internal open class JPAAuthorRepositoryTest(
     }
 
     @Test
+    fun getAll_withPagination_validOption_sortedAuthorLists() {
+        val authors = listOf(Author(AuthorName("A")), Author(AuthorName("B")),
+            Author(AuthorName("C")), Author(AuthorName("D")),
+            Author(AuthorName("E")), Author(AuthorName("F")))
+
+        for (author in authors){
+            em.persistAndFlush(author)
+        }
+
+        var resultList: List<Author> = repository.getAll(0, 2, "name", false)
+        assertTrue(resultList.size == 2 && resultList.first().name.Value.equals("A") &&
+                    resultList.last().name.Value.equals("B"))
+
+        resultList = repository.getAll(1, 2, "name", false)
+        assertTrue(resultList.size == 2 && resultList.first().name.Value.equals("C") &&
+                resultList.last().name.Value.equals("D"))
+
+        resultList = repository.getAll(0, 2, "name", true)
+        assertTrue(resultList.size == 2 && resultList.first().name.Value.equals("F") &&
+                resultList.last().name.Value.equals("E"))
+    }
+
+    @Test
+    fun getAll_withPagination_invalidOption_sortedAuthorLists() {
+        assertThrows<IllegalArgumentException> { repository.getAll(0, 4, "SomeWrongSortOption", false) }
+    }
+
+    @Test
     fun remove_nonexistentAuthor_throwsNotFoundException() {
         assertThrows<NotFoundException> { repository.remove(Author(AuthorName(FIRST_AUTHOR_NAME))) }
     }
