@@ -1,5 +1,6 @@
 package hulio13.articlesApi.web.security;
 
+import hulio13.articlesApi.api.exceptions.NotFoundException;
 import hulio13.articlesApi.web.security.entities.AppUserDetails;
 import jakarta.transaction.Transactional;
 import org.springframework.security.access.AccessDeniedException;
@@ -12,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 
 @Transactional
-public class JPAUserDetailsManager implements UserDetailsManager {
+public class JPAAppUserDetailsManager implements UserDetailsManager {
     private JPAAppUserDetailsRepository repository;
 
     private final SecurityContextHolderStrategy securityContextHolderStrategy = SecurityContextHolder
@@ -20,7 +21,7 @@ public class JPAUserDetailsManager implements UserDetailsManager {
 
     private final PasswordEncoder encoder;
 
-    public JPAUserDetailsManager(JPAAppUserDetailsRepository repository, PasswordEncoder encoder) {
+    public JPAAppUserDetailsManager(JPAAppUserDetailsRepository repository, PasswordEncoder encoder) {
         this.repository = repository;
         this.encoder = encoder;
     }
@@ -32,17 +33,25 @@ public class JPAUserDetailsManager implements UserDetailsManager {
             user.setPassword(encoder.encode(user.getPassword()));
             repository.create(user);
         } catch (ClassCastException e) {
-            throw new RuntimeException("User details implementation must be 'User'", e);
+            throw new RuntimeException("User details implementation must be 'AppUserDetails'", e);
         }
     }
 
     @Override
-    public void updateUser(UserDetails user) {
+    public void updateUser(UserDetails userDetails) {
         try {
-            // TODO: предотвращать изменение пароля
-            repository.update((AppUserDetails) user);
+            var user = (AppUserDetails) userDetails;
+            var userFromDatabase = loadUserByUsername(user.getUsername());
+
+            if (userFromDatabase == null)
+                throw new NotFoundException();
+
+            if (!user.getPassword().equals(userFromDatabase.getPassword()))
+                throw new IllegalArgumentException("Password can be changed only with changePassword method");
+
+            repository.update(user);
         } catch (ClassCastException e) {
-            throw new RuntimeException("User details implementation must be 'User'", e);
+            throw new RuntimeException("User details implementation must be 'AppUserDetails'", e);
         }
     }
 
@@ -67,7 +76,7 @@ public class JPAUserDetailsManager implements UserDetailsManager {
         if (currentUser.getPrincipal() instanceof AppUserDetails) {
             appUserDetails = (AppUserDetails) currentUser.getPrincipal();
         } else {
-            throw new IllegalCallerException("UserDetails interface implementation should be 'User'");
+            throw new IllegalCallerException("UserDetails interface implementation should be 'AppUserDetails'");
         }
 
         String currPassword = appUserDetails.getPassword();
@@ -89,7 +98,7 @@ public class JPAUserDetailsManager implements UserDetailsManager {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public AppUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return repository.getByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with username '" + username + "' not found."));
     }
