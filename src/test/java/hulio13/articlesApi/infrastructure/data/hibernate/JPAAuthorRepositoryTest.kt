@@ -60,7 +60,7 @@ internal open class JPAAuthorRepositoryTest(
 
     @Test
     fun getAll_withManyAuthorsInDatabase_notEmptyListReturned() {
-        val authors = listOf<Author>(
+        val authors = listOf(
             Author(AuthorName("SomeName1")), Author(AuthorName("SomeName2")),
             Author(AuthorName("SomeName3")), Author(AuthorName("SomeName4"))
         )
@@ -77,9 +77,7 @@ internal open class JPAAuthorRepositoryTest(
 
     @Test
     fun remove_existentUser_removedFromDatabase() {
-        val author = Author(AuthorName(FIRST_AUTHOR_NAME))
-
-        em.persistAndFlush(author)
+        val author = createAuthorWithNameAndPersistAndFlushAuthor(FIRST_AUTHOR_NAME)
         val id = author.id
 
         repository.remove(author)
@@ -94,9 +92,7 @@ internal open class JPAAuthorRepositoryTest(
 
     @Test
     fun removeById_existentUser_removedFromDatabase() {
-        val author = Author(AuthorName(FIRST_AUTHOR_NAME))
-
-        em.persistAndFlush(author)
+        val author = createAuthorWithNameAndPersistAndFlushAuthor(FIRST_AUTHOR_NAME)
         val id = author.id
 
         repository.removeById(id)
@@ -111,9 +107,7 @@ internal open class JPAAuthorRepositoryTest(
 
     @Test
     fun getAuthorByName_existentAuthor_OptionalWithAuthor() {
-        val author = Author(AuthorName(FIRST_AUTHOR_NAME))
-
-        em.persistAndFlush(author)
+        val author = createAuthorWithNameAndPersistAndFlushAuthor(FIRST_AUTHOR_NAME)
 
         val returnedAuthor = repository.getByAuthorName(FIRST_AUTHOR_NAME)
 
@@ -123,18 +117,14 @@ internal open class JPAAuthorRepositoryTest(
 
     @Test
     fun create_withExistingName_throwsAlreadyExistException() {
-        val author = Author(AuthorName(FIRST_AUTHOR_NAME))
-
-        em.persistAndFlush(author)
+        val author = createAuthorWithNameAndPersistAndFlushAuthor(FIRST_AUTHOR_NAME)
 
         assertThrows<AlreadyExistException> { repository.create(Author(AuthorName(FIRST_AUTHOR_NAME))) }
     }
 
     @Test
     fun create_withId_throwsAlreadyExistException() {
-        val author = Author(AuthorName(FIRST_AUTHOR_NAME))
-
-        em.persistAndFlush(author)
+        val author = createAuthorWithNameAndPersistAndFlushAuthor(FIRST_AUTHOR_NAME)
 
         assertThrows<AlreadyExistException> { repository.create(Author(author.id, AuthorName("SomeRandomName"))) }
     }
@@ -167,9 +157,7 @@ internal open class JPAAuthorRepositoryTest(
 
     @Test
     fun update_withAuthor_updatedInDatabase() {
-        val author = Author(AuthorName(FIRST_AUTHOR_NAME))
-
-        em.persistAndFlush(author)
+        val author = createAuthorWithNameAndPersistAndFlushAuthor(FIRST_AUTHOR_NAME)
 
         author.name = AuthorName(NEW_AUTHOR_NAME)
 
@@ -178,5 +166,9 @@ internal open class JPAAuthorRepositoryTest(
         val returnedAuthor = em.find(Author::class.java, author.id)
 
         assertTrue(returnedAuthor.name.Value.equals(NEW_AUTHOR_NAME))
+    }
+
+    private fun createAuthorWithNameAndPersistAndFlushAuthor(name: String): Author {
+        return em.persistAndFlush(Author(AuthorName(name)))
     }
 }
