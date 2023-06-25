@@ -9,11 +9,12 @@ import jakarta.persistence.PersistenceContext;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class JPAAuthorRepository implements AuthorRepository {
+    private static final List<String> sortByOptions = Arrays.asList("id", "name");
+
     @PersistenceContext
     private EntityManager em;
 
@@ -26,6 +27,21 @@ public class JPAAuthorRepository implements AuthorRepository {
     public List<Author> getAll() {
         return em.createQuery("select a from Author a", Author.class)
                 .getResultList();
+    }
+
+    @Override
+    public List<Author> getAll(int pageNumber, int pageSize, String sortBy, boolean isDescending) {
+        if (!sortByOptions.contains(sortBy))
+            throw new IllegalArgumentException(sortBy + " is not possible option to sort.");
+
+        return em.createQuery("select a from Author a order by " + sortBy  + (isDescending ? " DESC" : "") +
+                        " limit " + pageSize + " offset " + pageSize*pageNumber, Author.class)
+                .getResultList();
+    }
+
+    @Override
+    public List<String> getPossibleSortOptions() {
+        return sortByOptions;
     }
 
     @Override
