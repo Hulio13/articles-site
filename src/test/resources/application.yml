@@ -1,0 +1,25 @@
+server:
+  port: 8080
+  address: localhost
+
+jpa:
+  generate-ddl: false
+  hibernate:
+    ddl-auto: none
+
+spring:
+  application:
+    name: articles-api
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: admin
+    password: password
+
+  sql:
+    init:
+      mode: always
+
+logging:
+  level:
+    ROOT: DEBUG
