@@ -1,6 +1,6 @@
 package hulio13.articlesApi.web.security;
 
-import hulio13.articlesApi.api.exceptions.NotFoundException;
+import hulio13.articlesApi.web.exceptions.NotFoundException;
 import hulio13.articlesApi.infrastructure.data.AlreadyExistException;
 import hulio13.articlesApi.web.security.entities.AppUserDetails;
 import jakarta.persistence.EntityManager;

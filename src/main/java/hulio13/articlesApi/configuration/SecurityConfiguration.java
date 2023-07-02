@@ -1,6 +1,6 @@
 package hulio13.articlesApi.configuration;
 
-import hulio13.articlesApi.web.security.JPAUserDetailsManager;
+import hulio13.articlesApi.web.security.JPAAppUserDetailsManager;
 import hulio13.articlesApi.web.security.JPAAppUserDetailsRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -55,6 +55,6 @@ public class SecurityConfiguration {
 
     @Bean
     public UserDetailsManager userDetailsService(JPAAppUserDetailsRepository repository) {
-        return new JPAUserDetailsManager(repository, passwordEncoder());
+        return new JPAAppUserDetailsManager(repository, passwordEncoder());
     }
 }
