@@ -1,6 +1,6 @@
 package hulio13.articlesApi.infrastructure.data.hibernate
 
-import hulio13.articlesApi.api.exceptions.NotFoundException
+import hulio13.articlesApi.web.exceptions.NotFoundException
 import hulio13.articlesApi.domain.entity.Author
 import hulio13.articlesApi.domain.entity.author.AuthorName
 import hulio13.articlesApi.infrastructure.data.AlreadyExistException
