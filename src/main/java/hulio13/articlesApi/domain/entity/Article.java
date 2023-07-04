@@ -20,7 +20,7 @@ public class Article {
     @Getter
     private long id;
 
-    @NonNull @Getter @Setter @Embedded
+    @NonNull @Getter @Embedded
     private ArticleTitle title;
 
     @Column(name = "is_hidden")
@@ -45,7 +45,7 @@ public class Article {
     private List<Author> authors = new ArrayList<>();
 
     private Article(@NonNull ArticleTitle title){
-        this.title = title;
+        this.title = title.clone();
     }
 
     private Article(@NonNull ArticleTitle title, Author author){
@@ -85,5 +85,9 @@ public class Article {
 
     public List<Author> getAuthors(){
         return authors;
+    }
+
+    public void setTitle(ArticleTitle title) {
+        this.title = title.clone();
     }
 }

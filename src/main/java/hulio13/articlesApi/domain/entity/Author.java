@@ -18,7 +18,6 @@ public class Author {
     @Getter
     private long id;
 
-    @Setter
     @Getter
     @NonNull
     @Embedded
@@ -29,11 +28,11 @@ public class Author {
 
     public Author(long id, @NonNull AuthorName name) {
         this.id = id;
-        this.name = name;
+        this.name = name.clone();
     }
 
     public Author(@NonNull AuthorName name){
-        this.name = name;
+        this.name = name.clone();
     }
 
     public Author(long id, @NonNull AuthorName name, List<Article> articles){
@@ -59,5 +58,9 @@ public class Author {
 
     public List<Article> getAllArticles(){
         return articles;
+    }
+
+    public void setName(AuthorName name) {
+        this.name = name.clone();
     }
 }
