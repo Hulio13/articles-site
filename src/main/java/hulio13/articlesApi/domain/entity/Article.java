@@ -44,9 +44,18 @@ public class Article {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Author> authors = new ArrayList<>();
 
-    private Article(long id, @NonNull ArticleTitle title){
-        this.id = id;
+    private Article(@NonNull ArticleTitle title){
         this.title = title;
+    }
+
+    private Article(@NonNull ArticleTitle title, Author author){
+        this(title);
+        authors.add(author);
+    }
+
+    private Article(long id, @NonNull ArticleTitle title){
+        this(title);
+        this.id = id;
     }
 
     public Article(long id, Author author, @NonNull ArticleTitle title) {
