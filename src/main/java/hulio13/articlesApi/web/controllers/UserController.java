@@ -1,6 +1,7 @@
 package hulio13.articlesApi.web.controllers;
 
 import hulio13.articlesApi.domain.entity.author.AuthorName;
+import hulio13.articlesApi.web.entities.Result;
 import hulio13.articlesApi.web.security.entities.AppUserDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @PreAuthorize("permitAll()")
+// TODO: Добавить подтверждение с помощью email
 public class UserController {
     private final UserDetailsManager userDetailsManager;
     private final PasswordEncoder encoder;
@@ -22,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/register/{username}/{password}/{name}")
-    public ResponseEntity<Boolean> register(@PathVariable String username, @PathVariable String password, @PathVariable String name) {
+    public ResponseEntity<Result<Boolean>> register(@PathVariable String username, @PathVariable String password, @PathVariable String name) {
         AppUserDetails appUserDetails = new AppUserDetails();
         appUserDetails.setUsername(username);
         appUserDetails.setPassword(encoder.encode(password));
@@ -31,12 +33,12 @@ public class UserController {
 
         userDetailsManager.createUser(appUserDetails);
 
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(Result.ok(true));
     }
 
     @PutMapping("/changePass/{oldPass}/{newPass}")
-    public ResponseEntity<Boolean> changePass(@PathVariable String oldPass, @PathVariable String newPass) {
+    public ResponseEntity<Result<Boolean>> changePass(@PathVariable String oldPass, @PathVariable String newPass) {
         userDetailsManager.changePassword(oldPass, newPass);
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(Result.ok(true));
     }
 }
