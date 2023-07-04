@@ -8,8 +8,6 @@ public interface Repository<T> {
 
     List<T> getAll();
 
-    List<T> getAll(int pageNumber, int pageSize, String sortBy, boolean isDescending);
-
     List<String> getPossibleSortOptions();
 
     void remove(T entity);
