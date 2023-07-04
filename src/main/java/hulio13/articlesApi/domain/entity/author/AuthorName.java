@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor(force = true, access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "Value", column = @Column(name = "name", nullable = false, unique = true))
-public class AuthorName {
+public class AuthorName implements Cloneable {
     public static final int MAX_LENGTH = 50;
 
     public final String Value;
@@ -37,5 +37,14 @@ public class AuthorName {
     @Override
     public int hashCode() {
         return Value.hashCode();
+    }
+
+    @Override
+    public AuthorName clone() {
+        try {
+            return (AuthorName) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
