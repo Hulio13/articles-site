@@ -44,16 +44,16 @@ public class Article {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Author> authors = new ArrayList<>();
 
-    private Article(@NonNull ArticleTitle title){
+    public Article(@NonNull ArticleTitle title){
         this.title = title.clone();
     }
 
-    private Article(@NonNull ArticleTitle title, Author author){
+    public Article(@NonNull ArticleTitle title, Author author){
         this(title);
         authors.add(author);
     }
 
-    private Article(long id, @NonNull ArticleTitle title){
+    public Article(long id, @NonNull ArticleTitle title){
         this(title);
         this.id = id;
     }
