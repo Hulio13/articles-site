@@ -1,8 +1,8 @@
 package hulio13.articlesApi.web.controllers;
 
 import hulio13.articlesApi.application.dto.ArticleDto;
-import hulio13.articlesApi.application.service.ArticleService;
-import hulio13.articlesApi.application.service.AuthorService;
+import hulio13.articlesApi.domain.service.ArticleService;
+import hulio13.articlesApi.domain.service.AuthorService;
 import hulio13.articlesApi.domain.entity.Article;
 import hulio13.articlesApi.domain.entity.Author;
 import hulio13.articlesApi.domain.entity.article.ArticleTitle;

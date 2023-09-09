@@ -6,7 +6,7 @@ import hulio13.articlesApi.domain.entity.author.AuthorName;
 import hulio13.articlesApi.web.entities.Result;
 import hulio13.articlesApi.web.security.entities.AppUserDetails;
 import hulio13.articlesApi.web.exceptions.NotFoundException;
-import hulio13.articlesApi.application.service.AuthorService;
+import hulio13.articlesApi.domain.service.AuthorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
