@@ -1,14 +1,13 @@
 package hulio13.articlesApi.infrastructure.data.hibernate;
 
 import hulio13.articlesApi.domain.entity.Article;
-import hulio13.articlesApi.domain.entity.Author;
 import hulio13.articlesApi.domain.repository.ArticleRepository;
 import hulio13.articlesApi.infrastructure.data.AlreadyExistException;
 import hulio13.articlesApi.web.exceptions.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
-
+    
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -88,11 +87,16 @@ public class JPAArticlesRepository implements ArticleRepository {
 
     @Override
     public Article update(Article entity) {
-        var article = getById(entity.getId());
-        if (article.isEmpty())
-            throw new NotFoundException("Article with id '" + entity.getId() +
-                    "' not found");
+        var article = getById(entity.getId())
+                .orElseThrow(() -> new NotFoundException("Article with id '" + entity.getId() + "' not found"));
 
-        return em.merge(entity);
+        article.setTitle(entity.getTitle());
+        if (entity.getIsHidden() != null)
+            article.setIsHidden(entity.getIsHidden());
+        article.setCoverImgUrl(entity.getCoverImgUrl());
+        article.getAuthors().addAll(entity.getAuthors());
+        article.setMarkdownText(entity.getMarkdownText());
+
+        return em.merge(article);
     }
 }

@@ -1,11 +1,11 @@
 package hulio13.articlesApi.web.controllers;
 
+import hulio13.articlesApi.application.dto.AuthorDto;
 import hulio13.articlesApi.domain.entity.Author;
 import hulio13.articlesApi.domain.entity.author.AuthorName;
 import hulio13.articlesApi.web.entities.Result;
 import hulio13.articlesApi.web.security.entities.AppUserDetails;
 import hulio13.articlesApi.web.exceptions.NotFoundException;
-import hulio13.articlesApi.application.dto.AuthorDto;
 import hulio13.articlesApi.application.service.AuthorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -56,7 +56,7 @@ public class AuthorController {
     @PostMapping("/")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Result<Boolean>> createAuthor(@RequestBody AuthorDto author){
-        authorService.add(AuthorDto.toDomainObject(author));
+        authorService.add(AuthorDto.Companion.toDomainObject(author));
         return ResponseEntity.ok().body(Result.ok(true));
     }
 

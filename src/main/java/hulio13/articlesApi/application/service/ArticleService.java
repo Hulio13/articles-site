@@ -1,11 +1,14 @@
 package hulio13.articlesApi.application.service;
 
+import hulio13.articlesApi.application.dto.ArticleDto;
 import hulio13.articlesApi.domain.entity.Article;
+import hulio13.articlesApi.domain.entity.article.ArticleTitle;
 import hulio13.articlesApi.infrastructure.data.hibernate.JPAArticlesRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,7 +25,7 @@ public class ArticleService {
         return repository.getById(id);
     }
 
-    public List<Article> getAll(){
+    public List<Article> getAll() {
         return repository.getAll();
     }
 
@@ -52,6 +55,18 @@ public class ArticleService {
     }
 
     public Article update(Article article) {
+        return repository.update(article);
+    }
+
+    public Article updateFromDto(ArticleDto dto) {
+        Article article = new Article(new ArticleTitle(Objects.requireNonNull(dto.getTitle())));
+        if (dto.getMarkdownText() != null) {
+            article.setMarkdownText(dto.getMarkdownText());
+        }
+        if (dto.getCoverImgUrl() != null) {
+            article.setCoverImgUrl(dto.getCoverImgUrl());
+        }
+
         return repository.update(article);
     }
 }

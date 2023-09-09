@@ -26,7 +26,7 @@ public class Article {
     @Column(name = "is_hidden")
     @Getter
     @Setter
-    private boolean isHidden;
+    private Boolean isHidden = null;
 
     @Column(name = "cover_image_url")
     @Getter
@@ -38,6 +38,7 @@ public class Article {
 
     @Column(name = "markdown_text")
     @Getter
+    @Setter
     private String markdownText;
 
     @Fetch(FetchMode.SUBSELECT)

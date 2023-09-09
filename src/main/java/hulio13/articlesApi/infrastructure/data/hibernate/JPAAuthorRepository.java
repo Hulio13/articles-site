@@ -71,7 +71,8 @@ public class JPAAuthorRepository implements AuthorRepository {
 
         Optional<Author> byAuthorName = getByAuthorName(entity.getName().Value);
         if (byAuthorName.isPresent())
-            throw new AlreadyExistException("Author with name '" + entity.getName() + "' already exist.");
+            throw new AlreadyExistException("Author with name '" + entity.getName().Value +
+                    "' already exist.");
 
         em.persist(entity);
         return entity;
