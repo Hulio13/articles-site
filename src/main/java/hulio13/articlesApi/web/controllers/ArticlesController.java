@@ -8,7 +8,7 @@ import hulio13.articlesApi.domain.entity.Author;
 import hulio13.articlesApi.domain.entity.article.ArticleTitle;
 import hulio13.articlesApi.domain.exception.IllegalStringLengthException;
 import hulio13.articlesApi.infrastructure.data.AlreadyExistException;
-import hulio13.articlesApi.web.entities.Result;
+import hulio13.articlesApi.domain.entity.common.Result;
 import hulio13.articlesApi.web.security.entities.AppUserDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

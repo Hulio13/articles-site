@@ -1,7 +1,7 @@
 package hulio13.articlesApi.web.controllers;
 
 import hulio13.articlesApi.domain.entity.author.AuthorName;
-import hulio13.articlesApi.web.entities.Result;
+import hulio13.articlesApi.domain.entity.common.Result;
 import hulio13.articlesApi.web.security.entities.AppUserDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,4 +1,4 @@
-package hulio13.articlesApi.web.entities;
+package hulio13.articlesApi.domain.entity.common;
 
 public record Result<T>(boolean isSuccess, T data, Error error) {
     public static <T> Result<T> ok(T entity) {

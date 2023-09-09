@@ -3,7 +3,7 @@ package hulio13.articlesApi.web.controllers;
 import hulio13.articlesApi.application.dto.AuthorDto;
 import hulio13.articlesApi.domain.entity.Author;
 import hulio13.articlesApi.domain.entity.author.AuthorName;
-import hulio13.articlesApi.web.entities.Result;
+import hulio13.articlesApi.domain.entity.common.Result;
 import hulio13.articlesApi.web.security.entities.AppUserDetails;
 import hulio13.articlesApi.web.exceptions.NotFoundException;
 import hulio13.articlesApi.domain.service.AuthorService;
