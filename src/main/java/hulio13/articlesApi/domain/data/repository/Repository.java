@@ -1,4 +1,4 @@
-package hulio13.articlesApi.domain.repository;
+package hulio13.articlesApi.domain.data.repository;
 
 import java.util.List;
 import java.util.Optional;

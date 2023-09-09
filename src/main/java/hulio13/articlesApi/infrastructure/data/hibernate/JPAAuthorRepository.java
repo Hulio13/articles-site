@@ -2,7 +2,7 @@ package hulio13.articlesApi.infrastructure.data.hibernate;
 
 import hulio13.articlesApi.web.exceptions.NotFoundException;
 import hulio13.articlesApi.domain.entity.Author;
-import hulio13.articlesApi.domain.repository.AuthorRepository;
+import hulio13.articlesApi.domain.data.repository.AuthorRepository;
 import hulio13.articlesApi.infrastructure.data.AlreadyExistException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

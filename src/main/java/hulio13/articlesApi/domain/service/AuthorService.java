@@ -2,7 +2,7 @@ package hulio13.articlesApi.domain.service;
 
 import hulio13.articlesApi.domain.entity.Article;
 import hulio13.articlesApi.domain.entity.Author;
-import hulio13.articlesApi.domain.repository.AuthorRepository;
+import hulio13.articlesApi.domain.data.repository.AuthorRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

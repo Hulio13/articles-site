@@ -1,4 +1,4 @@
-package hulio13.articlesApi.domain.repository;
+package hulio13.articlesApi.domain.data.repository;
 
 import hulio13.articlesApi.domain.entity.Author;
 
