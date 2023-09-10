@@ -35,14 +35,16 @@ public class JPAArticlesRepository implements ArticleRepository {
             throw new IllegalArgumentException(sortBy + " is not possible option to sort.");
 
         return em.createQuery("select a from Article a " + (showHidden ? "" : "where a.isHidden == false ") +
-                        "order by " + sortBy  + (isDescending ? " DESC" : "") +
+                        "order by :sortBy" + (isDescending ? " DESC" : "") +
                         " limit " + pageSize + " offset " + pageSize*pageNumber, Article.class)
+                .setParameter("sortBy", sortBy)
                 .getResultList();
     }
 
     @Override
     public Optional<Article> getByTitle(String title) {
-        return em.createQuery("select a from Article a where a.title = '" + title + "'", Article.class)
+        return em.createQuery("select a from Article a where a.title = :title", Article.class)
+                .setParameter("title", title)
                 .getResultStream().findFirst();
     }
 

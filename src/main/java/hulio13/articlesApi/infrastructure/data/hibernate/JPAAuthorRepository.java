@@ -34,8 +34,9 @@ public class JPAAuthorRepository implements AuthorRepository {
         if (!sortByOptions.contains(sortBy))
             throw new IllegalArgumentException(sortBy + " is not possible option to sort.");
 
-        return em.createQuery("select a from Author a order by " + sortBy  + (isDescending ? " DESC" : "") +
+        return em.createQuery("select a from Author a order by :sortBy"  + (isDescending ? " DESC" : "") +
                         " limit " + pageSize + " offset " + pageSize*pageNumber, Author.class)
+                .setParameter("sortBy", sortBy)
                 .getResultList();
     }
 
@@ -90,7 +91,8 @@ public class JPAAuthorRepository implements AuthorRepository {
 
     @Override
     public Optional<Author> getByAuthorName(@NotNull String name) {
-        return em.createQuery("select a from Author a where a.name.Value = '" + name + "'", Author.class)
+        return em.createQuery("select a from Author a where a.name.Value = :name", Author.class)
+                .setParameter("name", name)
                 .getResultStream().findFirst();
     }
 }
