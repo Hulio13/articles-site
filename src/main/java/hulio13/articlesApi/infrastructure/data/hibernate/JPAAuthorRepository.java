@@ -70,9 +70,9 @@ public class JPAAuthorRepository implements AuthorRepository {
         if (getById(entity.getId()).isPresent())
             throw new AlreadyExistException("Author with id '" + entity.getId() + "' already exist.");
 
-        Optional<Author> byAuthorName = getByAuthorName(entity.getName().Value);
+        Optional<Author> byAuthorName = getByAuthorName(entity.getName().getValue());
         if (byAuthorName.isPresent())
-            throw new AlreadyExistException("Author with name '" + entity.getName().Value +
+            throw new AlreadyExistException("Author with name '" + entity.getName().getValue() +
                     "' already exist.");
 
         em.persist(entity);
@@ -91,7 +91,7 @@ public class JPAAuthorRepository implements AuthorRepository {
 
     @Override
     public Optional<Author> getByAuthorName(@NotNull String name) {
-        return em.createQuery("select a from Author a where a.name.Value = :name", Author.class)
+        return em.createQuery("select a from Author a where a.name.value = :name", Author.class)
                 .setParameter("name", name)
                 .getResultStream().findFirst();
     }

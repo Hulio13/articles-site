@@ -1,6 +1,5 @@
 package hulio13.articlesApi.domain.entity;
 
-import hulio13.articlesApi.domain.entity.article.ArticleTitle;
 import hulio13.articlesApi.domain.entity.author.AuthorName;
 import hulio13.articlesApi.domain.exception.AddException;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,14 +52,14 @@ class AuthorTest {
     @Test
     void getName() {
         Author author = new Author(1, new AuthorName(AUTHOR_NAME));
-        assertEquals(AUTHOR_NAME, author.getName().Value);
+        assertEquals(AUTHOR_NAME, author.getName().value);
     }
 
     @Test
     void setName() {
         Author author = new Author(1, new AuthorName("Some Name"));
         author.setName(new AuthorName(AUTHOR_NAME));
-        assertEquals(AUTHOR_NAME, author.getName().Value);
+        assertEquals(AUTHOR_NAME, author.getName().value);
     }
 
     @Test

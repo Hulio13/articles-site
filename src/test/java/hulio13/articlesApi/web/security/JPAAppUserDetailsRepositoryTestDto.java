@@ -4,7 +4,6 @@ import hulio13.articlesApi.web.exceptions.NotFoundException;
 import hulio13.articlesApi.domain.entity.Author;
 import hulio13.articlesApi.domain.entity.author.AuthorName;
 import hulio13.articlesApi.infrastructure.data.AlreadyExistException;
-import hulio13.articlesApi.web.security.entities.AppUserDetails;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @DataJpaTest
 @Import(JPAAppUserDetailsRepository.class)
-class JPAAppUserDetailsRepositoryTest {
+class JPAAppUserDetailsRepositoryTestDto {
     private static final String NON_EXISTENT_USERNAME = "NonExistentUsername";
     private static final String FIRST_TEST_USERNAME = "TestUsername";
     private static final String SECOND_TEST_USERNAME = "TestUsername2";
@@ -38,7 +37,7 @@ class JPAAppUserDetailsRepositoryTest {
     @Test
     public void getByUsername_userDetailsThatExist_optionalWithAuthorReturned() {
         AppUserDetails details = new AppUserDetails(FIRST_TEST_USERNAME, "somePass", true, true,
-                false, new Author(new AuthorName("someAuthor")));
+                false, true, new Author(new AuthorName("someAuthor")));
 
         em.persist(details);
 

@@ -41,7 +41,7 @@ internal open class JPAAuthorRepositoryTest(
 
         val returnedAuthor = repository.getById(id);
 
-        assertThat(returnedAuthor).isPresent.hasValueSatisfying { it.name.Value.equals(FIRST_AUTHOR_NAME) }
+        assertThat(returnedAuthor).isPresent.hasValueSatisfying { it.name.value.equals(FIRST_AUTHOR_NAME) }
     }
 
     @Test
@@ -81,16 +81,16 @@ internal open class JPAAuthorRepositoryTest(
         }
 
         var resultList: List<Author> = repository.getAll(0, 2, "name", false)
-        assertTrue(resultList.size == 2 && resultList.first().name.Value.equals("A") &&
-                    resultList.last().name.Value.equals("B"))
+        assertTrue(resultList.size == 2 && resultList.first().name.value.equals("A") &&
+                    resultList.last().name.value.equals("B"))
 
         resultList = repository.getAll(1, 2, "name", false)
-        assertTrue(resultList.size == 2 && resultList.first().name.Value.equals("C") &&
-                resultList.last().name.Value.equals("D"))
+        assertTrue(resultList.size == 2 && resultList.first().name.value.equals("C") &&
+                resultList.last().name.value.equals("D"))
 
         resultList = repository.getAll(0, 2, "name", true)
-        assertTrue(resultList.size == 2 && resultList.first().name.Value.equals("F") &&
-                resultList.last().name.Value.equals("E"))
+        assertTrue(resultList.size == 2 && resultList.first().name.value.equals("F") &&
+                resultList.last().name.value.equals("E"))
     }
 
     @Test
@@ -140,7 +140,7 @@ internal open class JPAAuthorRepositoryTest(
         val returnedAuthor = repository.getByAuthorName(FIRST_AUTHOR_NAME)
 
         assertTrue(returnedAuthor.isPresent)
-        assertTrue(returnedAuthor.get().name.Value.equals(FIRST_AUTHOR_NAME))
+        assertTrue(returnedAuthor.get().name.value.equals(FIRST_AUTHOR_NAME))
     }
 
     @Test
@@ -167,7 +167,7 @@ internal open class JPAAuthorRepositoryTest(
 
         assertTrue(
             returnedAuthor.isPresent &&
-                    returnedAuthor.get().name.Value.equals(FIRST_AUTHOR_NAME)
+                    returnedAuthor.get().name.value.equals(FIRST_AUTHOR_NAME)
         )
     }
 
@@ -193,7 +193,7 @@ internal open class JPAAuthorRepositoryTest(
 
         val returnedAuthor = em.find(Author::class.java, author.id)
 
-        assertTrue(returnedAuthor.name.Value.equals(NEW_AUTHOR_NAME))
+        assertTrue(returnedAuthor.name.value.equals(NEW_AUTHOR_NAME))
     }
 
     private fun createAuthorWithNameAndPersistAndFlushAuthor(name: String): Author {

@@ -1,7 +1,7 @@
 package hulio13.articlesApi.infrastructure.data.hibernate;
 
-import hulio13.articlesApi.domain.entity.Article;
 import hulio13.articlesApi.domain.data.repository.ArticleRepository;
+import hulio13.articlesApi.domain.entity.Article;
 import hulio13.articlesApi.infrastructure.data.AlreadyExistException;
 import hulio13.articlesApi.web.exceptions.NotFoundException;
 import jakarta.persistence.EntityManager;
@@ -49,6 +49,13 @@ public class JPAArticlesRepository implements ArticleRepository {
     }
 
     @Override
+    public List<Article> getAllByIds(List<Long> ids) {
+        return em.createQuery("select a from Article a where a.id in :ids", Article.class)
+                .setParameter("ids", ids)
+                .getResultList();
+    }
+
+    @Override
     public List<String> getPossibleSortOptions() {
         return sortByOptions;
     }
@@ -78,9 +85,9 @@ public class JPAArticlesRepository implements ArticleRepository {
         if (getById(entity.getId()).isPresent())
             throw new AlreadyExistException("Article with id '" + entity.getId() + "' already exist.");
 
-        Optional<Article> byArticleTitle = getByTitle(entity.getTitle().Value);
+        Optional<Article> byArticleTitle = getByTitle(entity.getTitle().getValue());
         if (byArticleTitle.isPresent())
-            throw new AlreadyExistException("Article with title '" + entity.getTitle().Value +
+            throw new AlreadyExistException("Article with title '" + entity.getTitle().getValue() +
                     "' already exist.");
 
         em.persist(entity);
@@ -93,8 +100,8 @@ public class JPAArticlesRepository implements ArticleRepository {
                 .orElseThrow(() -> new NotFoundException("Article with id '" + entity.getId() + "' not found"));
 
         article.setTitle(entity.getTitle());
-        if (entity.getIsHidden() != null)
-            article.setIsHidden(entity.getIsHidden());
+        if (entity.isHidden() != null)
+            article.setHidden(entity.isHidden());
         article.setCoverImgUrl(entity.getCoverImgUrl());
         article.getAuthors().addAll(entity.getAuthors());
         article.setMarkdownText(entity.getMarkdownText());
