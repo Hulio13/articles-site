@@ -29,7 +29,7 @@ dependencies {
     runtimeOnly("org.springframework.boot:spring-boot-devtools:3.0.5")
     runtimeOnly("com.h2database:h2:2.1.214")
     runtimeOnly("org.postgresql:postgresql:42.5.4")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.22")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.0")
 }
 
 group = "hulio13"
@@ -50,6 +50,15 @@ tasks.withType<JavaCompile>() {
 tasks.withType<Javadoc>() {
     options.encoding = "UTF-8"
 }
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'com.mypackage.MyClass'
+        )
+    }
+}
+
 kotlin {
     jvmToolchain(17)
 }
