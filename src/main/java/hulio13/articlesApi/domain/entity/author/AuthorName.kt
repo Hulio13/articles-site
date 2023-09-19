@@ -5,15 +5,15 @@ import jakarta.persistence.AttributeOverride
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
 
-const val MAX_LENGTH = 50
+const val AUTHOR_MAX_LENGTH = 50
 
 @Embeddable
 @AttributeOverride(name = "Value", column = Column(name = "name", nullable = false, unique = true))
 data class AuthorName(val value: String) : Cloneable {
     init {
-        if (value.length > MAX_LENGTH) {
+        if (value.length > AUTHOR_MAX_LENGTH) {
             throw IllegalStringLengthException(
-                "Name length should be less or equal than $MAX_LENGTH"
+                "Name length should be less or equal than $AUTHOR_MAX_LENGTH"
             )
         }
     }

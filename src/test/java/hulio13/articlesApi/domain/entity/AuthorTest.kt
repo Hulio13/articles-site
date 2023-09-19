@@ -1,85 +1,56 @@
-package hulio13.articlesApi.domain.entity;
+package hulio13.articlesApi.domain.entity
 
-import hulio13.articlesApi.domain.entity.author.AuthorName;
-import hulio13.articlesApi.domain.exception.AddException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import hulio13.articlesApi.domain.entity.article.ArticleTitle
+import hulio13.articlesApi.domain.entity.article.ARTICLES_MAX_LENGTH
+import hulio13.articlesApi.domain.entity.author.AuthorName
+import hulio13.articlesApi.domain.exception.AddException
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import kotlin.test.assertTrue
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-class AuthorTest {
-    private static final String AUTHOR_NAME = "Nikita Petrovich";
-
-    Author testAuthor;
-
+internal class AuthorTest {
+    var testAuthor: Author? = null
     @BeforeEach
-    void setUp(){
-        testAuthor = new Author(1, new AuthorName(AUTHOR_NAME));
+    fun setUp() {
+        testAuthor = Author(1, AuthorName(AUTHOR_NAME))
     }
 
-    @Test
-    void addArticles() {
-        testAuthor.addArticle(new Article(1, testAuthor, new ArticleTitle("Some article")));
-        testAuthor.addArticle(new Article(2, testAuthor, new ArticleTitle("Some article2")));
-
-        if (testAuthor.getArticleById(1).isEmpty())
-            fail("Article was not added.");
-
-        assertThrows(AddException.class,
-                () -> testAuthor.addArticle(new Article(1, testAuthor, new ArticleTitle("Bad article"))));
-    }
-
-    @Test
-    void getId() {
-        testAuthor.addArticle(new Article(1, testAuthor, new ArticleTitle("Some article")));
-        assertTrue(testAuthor.getArticleById(1).isPresent());
-    }
-
-    @Test
-    void removeArticleById() {
-        testAuthor.addArticle(new Article(1, testAuthor, new ArticleTitle("Some article")));
-
-        if (testAuthor.removeArticleById(1)){
-            assertTrue(testAuthor.getArticleById(1).isEmpty());
+    @get:Test
+    val name: Unit
+        get() {
+            val author = Author(1, AuthorName(AUTHOR_NAME))
+            Assertions.assertEquals(AUTHOR_NAME, author.name.value)
         }
-        else{
-            fail("Article has not been deleted.");
+
+    @Test
+    fun setName() {
+        val author = Author(1, AuthorName("Some Name"))
+        author.name = AuthorName(AUTHOR_NAME)
+        Assertions.assertEquals(AUTHOR_NAME, author.name.value)
+    }
+
+    @get:Test
+    val allArticles: Unit
+        get() {
+            testAuthor!!.articles.add(Article(1, authors = mutableListOf(testAuthor!!), title = ArticleTitle("Some article")))
+            testAuthor!!.articles.add(Article(2, authors = mutableListOf(testAuthor!!), title = ArticleTitle("Some article")))
+            testAuthor!!.articles.add(Article(3, authors = mutableListOf(testAuthor!!), title = ArticleTitle("Some article")))
+            val articles: List<Article> = testAuthor!!.articles
+            Assertions.assertEquals(1, articles[0].id)
+            Assertions.assertEquals(3, articles[2].id)
+            Assertions.assertEquals(3, articles.size)
         }
-    }
 
     @Test
-    void getName() {
-        Author author = new Author(1, new AuthorName(AUTHOR_NAME));
-        assertEquals(AUTHOR_NAME, author.getName().value);
+    fun attemptToCreateAuthorWithTooLongName() {
+        val tooLongName = "N".repeat(ARTICLES_MAX_LENGTH + 1)
+        Assertions.assertThrows(
+            Exception::class.java
+        ) { Author(1, AuthorName(tooLongName)) }
     }
 
-    @Test
-    void setName() {
-        Author author = new Author(1, new AuthorName("Some Name"));
-        author.setName(new AuthorName(AUTHOR_NAME));
-        assertEquals(AUTHOR_NAME, author.getName().value);
-    }
-
-    @Test
-    void getAllArticles(){
-        testAuthor.addArticle(new Article(1, testAuthor, new ArticleTitle("Some article")));
-        testAuthor.addArticle(new Article(2, testAuthor, new ArticleTitle("Some article2")));
-        testAuthor.addArticle(new Article(3, testAuthor, new ArticleTitle("Some article3")));
-
-        List<Article> articles = testAuthor.getAllArticles();
-
-        assertEquals(1, articles.get(0).getId());
-        assertEquals(3, articles.get(2).getId());
-        assertEquals(3, articles.size());
-    }
-
-    @Test
-    void attemptToCreateAuthorWithTooLongName(){
-        String tooLongName = "N".repeat(AuthorName.MAX_LENGTH + 1);
-
-        assertThrows(Exception.class,
-                () -> new Author(1, new AuthorName(tooLongName)));
+    companion object {
+        private const val AUTHOR_NAME = "Nikita Petrovich"
     }
 }

@@ -39,7 +39,7 @@ internal open class JPAAuthorRepositoryTest(
         val id = author.id
         em.detach(author)
 
-        val returnedAuthor = repository.getById(id);
+        val returnedAuthor = repository.getById(id ?: throw Exception());
 
         assertThat(returnedAuthor).isPresent.hasValueSatisfying { it.name.value.equals(FIRST_AUTHOR_NAME) }
     }
@@ -123,7 +123,7 @@ internal open class JPAAuthorRepositoryTest(
         val author = createAuthorWithNameAndPersistAndFlushAuthor(FIRST_AUTHOR_NAME)
         val id = author.id
 
-        repository.removeById(id)
+        repository.removeById(id ?: throw Exception())
 
         assertNull(em.find(Author::class.java, id))
     }

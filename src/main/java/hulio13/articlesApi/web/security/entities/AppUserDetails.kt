@@ -62,4 +62,14 @@ open class AppUserDetails(
     }
 
     fun getRoles(): List<Role> = roles
+
+    fun setLocked(locked: Boolean) {
+        this.locked = locked
+    }
+
+    fun setEnabled(enabled: Boolean) {
+        this.enabled = enabled
+    }
+
+    fun isLocked() = locked
 }
