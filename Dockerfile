@@ -1,0 +1,26 @@
+FROM amazoncorretto:17
+WORKDIR /api/
+LABEL authors="hulio13"
+ARG JAR_FILE
+COPY build/libs/articles-api-0.0.1-SNAPSHOT-boot.jar app.jar
+
+# Args for env params
+ARG DB_HOST=localhost
+ARG DB_PORT=5432
+ARG DB_NAME
+ARG DB_USER=postgres
+ARG DB_PASS
+ARG ADMIN_NAME="admin"
+ARG ADMIN_PASS="admin"
+
+ENV DB_HOST=$DB_HOST
+ENV DB_PORT=$DB_PORT
+ENV DB_NAME=$DB_NAME
+ENV DB_USER=$DB_USER
+ENV DB_PASS=$DB_PASS
+ENV ADMIN_NAME=$ADMIN_NAME
+ENV ADMIN_PASS=$ADMIN_PASS
+
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","/api/app.jar"]
