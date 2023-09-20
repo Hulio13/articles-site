@@ -8,13 +8,13 @@ spring:
 
   security:
     user:
-      name: "admin"
-      password: "somePass"
+      name: ${ADMIN_NAME}
+      password: ${ADMIN_PASS}
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/articles_api
-    username: "articles_api_user"
-    password: "someStrongPass"
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASS}
     driver-class-name: org.postgresql.Driver
 
   jpa:
